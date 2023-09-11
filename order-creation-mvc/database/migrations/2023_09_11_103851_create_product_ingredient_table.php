@@ -21,7 +21,7 @@ return new class extends Migration
                 'ingredient_id'
             ]);
 
-            $table->float('quantity')->comment('quantity in grams');
+            $table->float('quantity')->comment('ingredient quantity in grams');
 
             $table->timestamps();
         });

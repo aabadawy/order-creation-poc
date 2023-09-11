@@ -11,9 +11,7 @@ class CreateOrderCommand
     public function __construct(
         private AttachProductsToOrderCommand $attachProductsToOrderCommand,
     )
-    {
-
-    }
+    { }
 
     public function execute(OrderData $data): Order
     {
@@ -23,19 +21,10 @@ class CreateOrderCommand
 
         $order->save();
 
+        $order->refresh();
+
         $this->attachProductsToOrderCommand->execute($order,$data->products);
-        // validate deduction is valid from ingredients
 
-        // fire order created event
-
-        // crete order
-
-        // attach order products
-
-        // attach order product ingredients
-
-
-        return $order->refresh();
-        //return created order
+        return $order;
     }
 }

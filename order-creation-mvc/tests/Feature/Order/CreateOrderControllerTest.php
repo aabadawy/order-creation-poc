@@ -4,6 +4,7 @@ use App\Models\Ingredient;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use App\ValueObjects\QuantityValueObject;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses( RefreshDatabase::class);
@@ -67,10 +68,18 @@ describe('CreateOrderController',function () {
 
         $authClient = User::query()->first();
 
-        $products = Product::factory(3)
+        $currentQuantity = new QuantityValueObject(1000);
+
+        $subtractedQuantity = new QuantityValueObject(100);
+
+        $totalUsedProducts = 1;
+
+        $totalUsedProductIngredients = 3;
+
+        $products = Product::factory($totalUsedProducts)
             ->hasAttached(
-                Ingredient::factory(3)->create(['init_quantity'=> 1000, 'current_quantity' => 1000])
-                ,['quantity' => rand(100,500)]
+                Ingredient::factory($totalUsedProductIngredients)->create(['init_quantity'=> $currentQuantity, 'current_quantity' => $currentQuantity])
+                ,['quantity' => $subtractedQuantity]
             )
             ->create();
 
@@ -87,6 +96,12 @@ describe('CreateOrderController',function () {
 
         $response->assertOk();
 
+        $createdOrder = Order::query()->first();
+
         expect(Order::query()->get())->toHaveCount(1);
+
+        expect($createdOrder->products()->get())->toHaveCount($totalUsedProducts);
+
+        expect($createdOrder->ingredients()->get())->toHaveCount($totalUsedProductIngredients);
     });
 });

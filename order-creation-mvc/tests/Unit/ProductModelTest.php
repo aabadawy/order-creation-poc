@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Ingredient;
+use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(Tests\TestCase::class, RefreshDatabase::class);
@@ -8,20 +10,20 @@ test('should have a name attribute', function () {
 
     $expectedName = 'Beef Burger';
 
-    $product = \App\Models\Product::factory()->createOne(['name' => $expectedName]);
+    $product = Product::factory()->createOne(['name' => $expectedName]);
 
     expect($product->name)->toEqual($expectedName);
 });
 
 test('should attach ingredients to product', function () {
-    $product = \App\Models\Product::factory()->createOne();
+    $product = Product::factory()->createOne();
 
-    $ingredients = \App\Models\Ingredient::factory(3)->create();
+    $ingredients = Ingredient::factory(3)->create();
 
     expect($product->ingredients()->count())->toEqual(0);
 
     $product_ingredients = $ingredients
-        ->map(fn(\App\Models\Ingredient $ingredient) => [
+        ->map(fn(Ingredient $ingredient) => [
             'ingredient_id' => $ingredient->getKey(),
             'quantity' => $ingredient->current_quantity
         ])->keyBy('ingredient_id')->toArray();

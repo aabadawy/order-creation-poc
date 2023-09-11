@@ -4,9 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Ingredient;
 use App\Models\Product;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Arr;
 
 class InitProductSeeder extends Seeder
 {
@@ -16,13 +14,13 @@ class InitProductSeeder extends Seeder
     public function run(): void
     {
         $product = (new Product([
-            'name'  => 'Burger'
+            'name' => 'Burger',
         ]));
 
         $product->saveQuietly();
 
         $ingredients = Ingredient::query()
-            ->whereIn('name',['Beef','Cheese','Onion'])
+            ->whereIn('name', ['Beef', 'Cheese', 'Onion'])
             ->limit(3)
             ->get();
 
@@ -30,16 +28,16 @@ class InitProductSeeder extends Seeder
             throw new \Exception('please ensure to seed the init ingredients first!, using the command php artisan:seed InitIngredientSeeder');
         }
 
-        $product_ingredients  = $ingredients->map(function(Ingredient $ingredient) {
+        $product_ingredients = $ingredients->map(function (Ingredient $ingredient) {
             $product_ingredient_quantity = match (strtolower($ingredient->name)) {
-                'beef'  => 150,
+                'beef' => 150,
                 'cheese' => 30,
                 'onion' => 20,
             };
 
             return [
-                'ingredient_id'    => $ingredient->getKey(),
-                'quantity'         => $product_ingredient_quantity
+                'ingredient_id' => $ingredient->getKey(),
+                'quantity' => $product_ingredient_quantity,
             ];
 
         })

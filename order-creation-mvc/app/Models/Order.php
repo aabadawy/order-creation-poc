@@ -18,7 +18,7 @@ class Order extends Model
 
     public function client(): BelongsTo
     {
-        return $this->belongsTo(User::class,'client_id');
+        return $this->belongsTo(User::class, 'client_id');
     }
 
     public function products(): BelongsToMany
@@ -41,6 +41,6 @@ class Order extends Model
         )
             ->using(OrderProductIngredient::class)
             ->withTimestamps()
-            ->withPivot(['quantity','product_id']);
+            ->withPivot(['quantity', 'product_id']);
     }
 }

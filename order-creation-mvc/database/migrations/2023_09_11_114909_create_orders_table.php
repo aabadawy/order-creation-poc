@@ -25,7 +25,7 @@ return new class extends Migration
                     'preparing',
                     'delivering',
                     'delivered',
-                    'canceled'
+                    'canceled',
                 ])
                 ->default('pending');
 

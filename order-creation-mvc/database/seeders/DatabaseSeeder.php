@@ -12,16 +12,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-         \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(10)->create();
 
-         \App\Models\User::factory()->create([
-             'name' => 'Foodics Tech',
-             'email' => 'client@gmail.com',
-         ]);
+        \App\Models\User::factory()->create([
+            'name' => 'Foodics Tech',
+            'email' => 'client@gmail.com',
+        ]);
 
-         $this->call([
-             InitIngredientSeeder::class,
-             InitProductSeeder::class
-         ]);
+        $this->call([
+            InitIngredientSeeder::class,
+            InitProductSeeder::class,
+        ]);
     }
 }

@@ -25,7 +25,7 @@ class Quantity implements CastsAttributes
      */
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        if(! $value instanceof  QuantityValueObject) {
+        if (! $value instanceof QuantityValueObject) {
             throw new \InvalidArgumentException('The given value is not an QuantityValueObject instance.');
         }
 

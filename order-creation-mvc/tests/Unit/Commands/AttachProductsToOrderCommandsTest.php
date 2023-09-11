@@ -12,9 +12,9 @@ use Spatie\LaravelData\DataCollection;
 
 uses(Tests\TestCase::class, RefreshDatabase::class);
 
-describe('AttachProductsToOrderCommands',function () {
-    it('should have execute method',function () {
-       expect(AttachProductsToOrderCommand::class)->toHaveMethod('execute');
+describe('AttachProductsToOrderCommands', function () {
+    it('should have execute method', function () {
+        expect(AttachProductsToOrderCommand::class)->toHaveMethod('execute');
     });
 
     it('should throw exception when ingredient quantity out of stock', function () {
@@ -26,8 +26,8 @@ describe('AttachProductsToOrderCommands',function () {
             $product = Product::factory()->hasAttached(
                 Ingredient::factory(3)->create([
                     'init_quantity' => $quantity,
-                    'current_quantity'  => $quantity
-                ]),['quantity' => $productIngredientQuantity]
+                    'current_quantity' => $quantity,
+                ]), ['quantity' => $productIngredientQuantity]
             )->createOne();
 
             $ingredient = Ingredient::query()->first();
@@ -36,18 +36,17 @@ describe('AttachProductsToOrderCommands',function () {
 
             $ingredient->save();
 
-            $order =  Order::factory()->for(User::factory()->createOne(),'client')->createOne();
+            $order = Order::factory()->for(User::factory()->createOne(), 'client')->createOne();
 
             $orderProductsData = (new DataCollection(
                 OrderProductData::class,
                 [
-                    OrderProductData::from(['id' => $product->getKey(),'quantity' => 3])
+                    OrderProductData::from(['id' => $product->getKey(), 'quantity' => 3]),
                 ]
             ));
 
-            (new AttachProductsToOrderCommand())->execute($order,$orderProductsData);
-        }
-        catch (Exception $exception) {
+            (new AttachProductsToOrderCommand())->execute($order, $orderProductsData);
+        } catch (Exception $exception) {
             expect($exception)->toBeInstanceOf(InvalidArgumentException::class);
 
             expect($exception->getMessage())->toEqual('value can not be minus.');
@@ -62,7 +61,7 @@ describe('AttachProductsToOrderCommands',function () {
 
         $ingredients = Ingredient::factory(3)->create([
             'init_quantity' => $quantity,
-            'current_quantity'  => $quantity
+            'current_quantity' => $quantity,
         ]);
 
         $product = Product::factory()
@@ -71,16 +70,16 @@ describe('AttachProductsToOrderCommands',function () {
                 ['quantity' => $productIngredientQuantity]
             )->createOne();
 
-        $order =  Order::factory()->for(User::factory()->createOne(),'client')->createOne();
+        $order = Order::factory()->for(User::factory()->createOne(), 'client')->createOne();
 
         $orderProductsData = (new DataCollection(
             OrderProductData::class,
             [
-                OrderProductData::from(['id' => $product->getKey(),'quantity' => 3])
+                OrderProductData::from(['id' => $product->getKey(), 'quantity' => 3]),
             ]
         ));
 
-        (new AttachProductsToOrderCommand())->execute($order,$orderProductsData);
+        (new AttachProductsToOrderCommand())->execute($order, $orderProductsData);
 
         $subtractedFirstIngredient = Ingredient::query()->first();
 
@@ -88,7 +87,7 @@ describe('AttachProductsToOrderCommands',function () {
             ->toBeLessThan($ingredients->first()->current_quantity->toGrams());
 
         expect($subtractedFirstIngredient->current_quantity->toGrams())
-            ->toEqual($ingredients->first()->current_quantity->toGrams()  - ($productIngredientQuantity->toGrams() * 3));
+            ->toEqual($ingredients->first()->current_quantity->toGrams() - ($productIngredientQuantity->toGrams() * 3));
 
         expect($order->products()->get())->toHaveCount(1);
 

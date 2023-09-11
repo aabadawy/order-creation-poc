@@ -7,13 +7,13 @@ use App\Models\User;
 use App\ValueObjects\QuantityValueObject;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses( RefreshDatabase::class);
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    User::factory()->createOne(['email' => 'client@gmail.com','name' => 'Foo Baa']);
+    User::factory()->createOne(['email' => 'client@gmail.com', 'name' => 'Foo Baa']);
 });
 
-describe('CreateOrderController',function () {
+describe('CreateOrderController', function () {
 
     test('should return Ok response with 200 status code when data is valid', function () {
 
@@ -21,39 +21,38 @@ describe('CreateOrderController',function () {
 
         $products = Product::factory(3)->create();
 
-        $response = $this->actingAs($authClient)->post('/api/orders',[
-            'products'  => [
+        $response = $this->actingAs($authClient)->post('/api/orders', [
+            'products' => [
                 [
-                    'id'    => $products->first()->getKey(),
-                    'quantity'  => 1
-                ]
-            ]
+                    'id' => $products->first()->getKey(),
+                    'quantity' => 1,
+                ],
+            ],
         ]);
 
         $response->assertOk();
     });
 
-
-    test('should throw 422 status code when validation failed',function () {
+    test('should throw 422 status code when validation failed', function () {
         $authClient = User::query()->first();
 
-        $response = $this->actingAs($authClient)->post('/api/orders',[
+        $response = $this->actingAs($authClient)->post('/api/orders', [
 
         ]);
 
         $response->assertStatus(422);
 
         $response->assertInvalid([
-            'products'
+            'products',
         ]);
 
-        $otherResponse = $this->actingAs($authClient)->post('api/orders',[
-            'products'  => [
+        $otherResponse = $this->actingAs($authClient)->post('api/orders', [
+            'products' => [
                 [
-                    'id'    => -1,
-                    'quantity'  => 0
-                ]
-            ]
+                    'id' => -1,
+                    'quantity' => 0,
+                ],
+            ],
         ]);
 
         $otherResponse->assertStatus(422);
@@ -78,20 +77,19 @@ describe('CreateOrderController',function () {
 
         $products = Product::factory($totalUsedProducts)
             ->hasAttached(
-                Ingredient::factory($totalUsedProductIngredients)->create(['init_quantity'=> $currentQuantity, 'current_quantity' => $currentQuantity])
-                ,['quantity' => $subtractedQuantity]
+                Ingredient::factory($totalUsedProductIngredients)->create(['init_quantity' => $currentQuantity, 'current_quantity' => $currentQuantity]), ['quantity' => $subtractedQuantity]
             )
             ->create();
 
         expect(Order::query()->get())->toBeEmpty();
 
-        $response = $this->actingAs($authClient)->post('/api/orders',[
-            'products'  => [
+        $response = $this->actingAs($authClient)->post('/api/orders', [
+            'products' => [
                 [
-                    'id'    => $products->first()->getKey(),
-                    'quantity'  => 1
-                ]
-            ]
+                    'id' => $products->first()->getKey(),
+                    'quantity' => 1,
+                ],
+            ],
         ]);
 
         $response->assertOk();

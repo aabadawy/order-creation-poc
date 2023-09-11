@@ -10,8 +10,7 @@ use App\ValueObjects\QuantityValueObject;
 
 class AttachProductsToOrderCommand
 {
-
-    public function execute(Order $order,iterable $orderProductsData): void
+    public function execute(Order $order, iterable $orderProductsData): void
     {
         $this->validateOrderProductsData($orderProductsData);
 
@@ -22,17 +21,17 @@ class AttachProductsToOrderCommand
             ->with('ingredients')
             ->get();
 
-        $orderProductIngredients = $attachableProducts->map(function (Product $product) use($orderProducts) {
-            return $product->ingredients->map(function (Ingredient $ingredient) use($product,$orderProducts) {
+        $orderProductIngredients = $attachableProducts->map(function (Product $product) use ($orderProducts) {
+            return $product->ingredients->map(function (Ingredient $ingredient) use ($product, $orderProducts) {
 
                 $usedQuantity = $orderProducts[$product->getKey()]['quantity'] * $ingredient->pivot->quantity->toGrams();
 
                 $ingredient->subtractQuantity($usedQuantity);
 
-                $orderProductIngredient =  [
+                $orderProductIngredient = [
                     'product_id' => $product->getKey(),
                     'ingredient_id' => $ingredient->getKey(),
-                    'quantity'  => new QuantityValueObject($usedQuantity)
+                    'quantity' => new QuantityValueObject($usedQuantity),
                 ];
 
                 $ingredient->save();
@@ -53,7 +52,7 @@ class AttachProductsToOrderCommand
     {
         foreach ($orderProductsData as $orderProductData) {
             throw_unless($orderProductData instanceof OrderProductData,
-                '$orderProductsData rows should be instance of '. OrderProductData::class
+                '$orderProductsData rows should be instance of '.OrderProductData::class
             );
         }
     }

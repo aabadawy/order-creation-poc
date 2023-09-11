@@ -22,28 +22,28 @@ class Ingredient extends Model
     ];
 
     protected $casts = [
-        'current_quantity'  => Quantity::class,
-        'init_quantity'     => Quantity::class
+        'current_quantity' => Quantity::class,
+        'init_quantity' => Quantity::class,
     ];
 
     public function canSubtractQuantity(float $quantity, string $measure = 'g'): bool
     {
         try {
-            return $this->current_quantity->subtract($quantity,$measure)->toGrams() > 0;
-        }
-        catch(\Exception $exception) {
+            return $this->current_quantity->subtract($quantity, $measure)->toGrams() > 0;
+        } catch (\Exception $exception) {
             Log::info($exception->getMessage());
+
             return false;
         }
     }
 
-    public function subtractQuantity(float $quantity,string $measure = 'g'): void
+    public function subtractQuantity(float $quantity, string $measure = 'g'): void
     {
-        $this->current_quantity = $this->current_quantity->subtract($quantity,$measure);
+        $this->current_quantity = $this->current_quantity->subtract($quantity, $measure);
     }
 
-    public function addQuantity(float $quantity,string $measure = 'g'): void
+    public function addQuantity(float $quantity, string $measure = 'g'): void
     {
-        $this->current_quantity = $this->current_quantity->add($quantity,$measure);
+        $this->current_quantity = $this->current_quantity->add($quantity, $measure);
     }
 }

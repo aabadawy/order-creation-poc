@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('ingredient_id')->constrained('ingredients')->cascadeOnDelete();
             $table->unique([
                 'product_id',
-                'ingredient_id'
+                'ingredient_id',
             ]);
 
             $table->float('quantity')->comment('ingredient quantity in grams');

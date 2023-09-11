@@ -11,6 +11,6 @@ class OrderProductIngredient extends Pivot
     use HasFactory;
 
     protected $casts = [
-        'quantity'  => Quantity::class
+        'quantity' => Quantity::class,
     ];
 }

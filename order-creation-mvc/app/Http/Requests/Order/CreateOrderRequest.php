@@ -15,15 +15,15 @@ class CreateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'products'  => [
-                'required', 'array','min:1'
+            'products' => [
+                'required', 'array', 'min:1',
             ],
             'products.*.id' => [
-                'required',Rule::exists('products','id'),
+                'required', Rule::exists('products', 'id'),
             ],
-            'products.*.quantity'   => [
-                'required','integer','min:1'
-            ]
+            'products.*.quantity' => [
+                'required', 'integer', 'min:1',
+            ],
         ];
     }
 }

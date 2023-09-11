@@ -9,11 +9,10 @@ use Spatie\LaravelData\DataCollection;
 
 class OrderData extends Data
 {
-    public function __construct
-    (
+    public function __construct(
         readonly public User $client,
         #[DataCollectionOf(OrderProductData::class)]
         readonly public DataCollection $products,
-    )
-    {}
+    ) {
+    }
 }

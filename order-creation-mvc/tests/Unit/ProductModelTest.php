@@ -23,9 +23,9 @@ test('should attach ingredients to product', function () {
     expect($product->ingredients()->count())->toEqual(0);
 
     $product_ingredients = $ingredients
-        ->map(fn(Ingredient $ingredient) => [
+        ->map(fn (Ingredient $ingredient) => [
             'ingredient_id' => $ingredient->getKey(),
-            'quantity' => $ingredient->current_quantity
+            'quantity' => $ingredient->current_quantity,
         ])->keyBy('ingredient_id')->toArray();
 
     $product->ingredients()->sync($product_ingredients);
@@ -34,4 +34,3 @@ test('should attach ingredients to product', function () {
 
     expect($product->ingredients()->first()->name)->toEqual($ingredients->first()->name);
 });
-

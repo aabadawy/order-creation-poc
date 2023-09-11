@@ -17,12 +17,12 @@ class IngredientFactory extends Factory
      */
     public function definition(): array
     {
-        $init_quantity = $current_quantity = new QuantityValueObject($this->faker->randomFloat(2,1000,20000));
+        $init_quantity = $current_quantity = new QuantityValueObject($this->faker->randomFloat(2, 1000, 20000));
 
         return [
             'name' => $this->faker->name(),
-            'init_quantity'  => $init_quantity,
-            'current_quantity'   => $current_quantity
+            'init_quantity' => $init_quantity,
+            'current_quantity' => $current_quantity,
         ];
     }
 }

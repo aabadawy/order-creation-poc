@@ -13,5 +13,4 @@ class Ingredient extends Model
         'name',
         'current_quantity',
     ];
-
 }

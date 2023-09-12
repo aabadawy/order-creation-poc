@@ -24,6 +24,6 @@ class CreateOrderCommand
 
         $this->attachProductsToOrderCommand->execute($order, $data->products);
 
-        return $order;
+        return $order->load(['ingredients', 'products']);
     }
 }

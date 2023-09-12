@@ -15,7 +15,7 @@ beforeEach(function () {
 
 describe('CreateOrderController', function () {
 
-    test('should return Ok response with 200 status code when data is valid', function () {
+    it('should return Ok response with 200 status code when data is valid', function () {
 
         $authClient = User::query()->first();
 
@@ -30,7 +30,7 @@ describe('CreateOrderController', function () {
             ],
         ]);
 
-        $response->assertOk();
+        $response->assertCreated();
     });
 
     test('should throw 422 status code when validation failed', function () {
@@ -63,8 +63,7 @@ describe('CreateOrderController', function () {
         ]);
     });
 
-    test('should create order with products and ingredients attached to created order', function () {
-
+    it('should create order with products and ingredients attached to created order', function () {
         $authClient = User::query()->first();
 
         $currentQuantity = new QuantityValueObject(1000);
@@ -92,7 +91,7 @@ describe('CreateOrderController', function () {
             ],
         ]);
 
-        $response->assertOk();
+        $response->assertCreated();
 
         $createdOrder = Order::query()->first();
 
@@ -102,4 +101,6 @@ describe('CreateOrderController', function () {
 
         expect($createdOrder->ingredients()->get())->toHaveCount($totalUsedProductIngredients);
     });
+
+    //todo test no order created when exception thrown
 });

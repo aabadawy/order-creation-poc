@@ -45,7 +45,7 @@ describe('AttachProductsToOrderCommands', function () {
                 ]
             ));
 
-            (new AttachProductsToOrderCommand())->execute($order, $orderProductsData);
+            app(AttachProductsToOrderCommand::class)->execute($order, $orderProductsData);
         } catch (Exception $exception) {
             expect($exception)->toBeInstanceOf(InvalidArgumentException::class);
 
@@ -79,7 +79,7 @@ describe('AttachProductsToOrderCommands', function () {
             ]
         ));
 
-        (new AttachProductsToOrderCommand())->execute($order, $orderProductsData);
+        app(AttachProductsToOrderCommand::class)->execute($order, $orderProductsData);
 
         $subtractedFirstIngredient = Ingredient::query()->first();
 

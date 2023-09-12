@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\ValueObjects\QuantityValueObject;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Testing\Fluent\AssertableJson;
 
 uses(RefreshDatabase::class);
 
@@ -90,10 +91,16 @@ describe('CreateOrderController', function () {
                 ],
             ],
         ]);
+        $createdOrder = Order::query()->first();
 
         $response->assertCreated();
 
-        $createdOrder = Order::query()->first();
+        $response
+            ->assertJson(fn (AssertableJson $json) => $json->has('data')
+                ->hasAll(['data.id', 'data.products', 'data.products', 'data.ingredients', 'data.products.0.name'])
+                ->count('data.ingredients', $totalUsedProductIngredients)
+                ->missing('data.products.1')
+            );
 
         expect(Order::query()->get())->toHaveCount(1);
 

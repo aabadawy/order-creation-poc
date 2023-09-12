@@ -29,7 +29,6 @@ class CreateOrderController extends Controller
 
             throw $exception;
         }
-        // todo document the task
 
         return OrderResource::make($createdOrder);
     }

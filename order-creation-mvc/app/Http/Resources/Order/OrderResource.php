@@ -17,6 +17,7 @@ class OrderResource extends JsonResource
         return [
             'id' => (int) $this->getKey(),
             'products' => OrderProductsResource::collection($this->whenLoaded('products')),
+            'ingredients' => OrderProductIngredientResource::collection($this->whenLoaded('ingredients')),
         ];
     }
 }

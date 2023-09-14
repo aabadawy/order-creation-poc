@@ -3,6 +3,7 @@
 namespace App\Commands\Order;
 
 use App\DTOs\Order\OrderData;
+use App\Events\Order\OrderCreatedEvent;
 use App\Models\Order;
 
 class CreateOrderCommand
@@ -23,6 +24,8 @@ class CreateOrderCommand
         $order->refresh();
 
         $this->attachProductsToOrderCommand->execute($order, $data->products);
+
+        event(new OrderCreatedEvent($order));
 
         return $order->load(['ingredients', 'products']);
     }

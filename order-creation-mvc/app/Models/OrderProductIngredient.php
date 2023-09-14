@@ -10,6 +10,8 @@ class OrderProductIngredient extends Pivot
 {
     use HasFactory;
 
+    protected $table = 'order_products_ingredients';
+
     protected $casts = [
         'quantity' => Quantity::class,
     ];

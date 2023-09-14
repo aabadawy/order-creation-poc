@@ -16,3 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/ingredients', function () {
+   return view('mails.ingredient-quantity-below',['ingredient' => \App\Models\Ingredient::factory()->createOne()]);
+});

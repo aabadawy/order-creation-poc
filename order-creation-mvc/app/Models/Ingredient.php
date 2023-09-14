@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use App\Casts\Quantity;
+use App\EloquentBuilder\IngredientQueryBuilder;
 use App\ValueObjects\QuantityValueObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property QuantityValueObject $init_quantity
@@ -16,9 +17,12 @@ class Ingredient extends Model
 {
     use HasFactory;
 
+    const LOW_QUANTITY_PERCENTAGE = 0.5;
+
     protected $fillable = [
         'name',
         'current_quantity',
+        'quantity_below_email_sent_at',
     ];
 
     protected $casts = [
@@ -26,15 +30,13 @@ class Ingredient extends Model
         'init_quantity' => Quantity::class,
     ];
 
-    public function canSubtractQuantity(float $quantity, string $measure = 'g'): bool
+    public function products(): BelongsToMany
     {
-        try {
-            return $this->current_quantity->subtract($quantity, $measure)->toGrams() > 0;
-        } catch (\Exception $exception) {
-            Log::info($exception->getMessage());
-
-            return false;
-        }
+        return $this
+            ->belongsToMany(Product::class, 'product_ingredient')
+            ->using(ProductIngredient::class)
+            ->withPivot(['quantity'])
+            ->withTimestamps();
     }
 
     public function subtractQuantity(float $quantity, string $measure = 'g'): void
@@ -42,8 +44,8 @@ class Ingredient extends Model
         $this->current_quantity = $this->current_quantity->subtract($quantity, $measure);
     }
 
-    public function addQuantity(float $quantity, string $measure = 'g'): void
+    public function newEloquentBuilder($query): IngredientQueryBuilder
     {
-        $this->current_quantity = $this->current_quantity->add($quantity, $measure);
+        return new IngredientQueryBuilder($query);
     }
 }

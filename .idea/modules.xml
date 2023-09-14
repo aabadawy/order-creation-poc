@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/order-creation-poc.iml" filepath="$PROJECT_DIR$/.idea/order-creation-poc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/order-creation-mvc.iml" filepath="$PROJECT_DIR$/.idea/order-creation-mvc.iml" />
     </modules>
   </component>
 </project>

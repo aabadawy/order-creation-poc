@@ -14,6 +14,7 @@
 ### todos 
 - [ ] install laravel sail, and configure docker compose file
 - [ ] document project running using laravel sail
+- [ ] add postman collection link
 ---
 ### Issue
 #### 1.  Order Creation

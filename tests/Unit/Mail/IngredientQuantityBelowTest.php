@@ -18,6 +18,8 @@ describe('IngredientsQuantityIsBelow', function () {
 
         $mailable = new IngredientQuantityBelow($ingredient);
 
+        config(['mail.from.address' => 'app@foodics.com' , '']);
+
         $mailable->assertFrom('app@foodics.com');
 
         $mailable->assertTo('marcher@example.com');

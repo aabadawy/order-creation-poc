@@ -35,13 +35,4 @@ class QuantityValueObject
 
         return new self($result, $measure);
     }
-
-    public function add(float $value, string $measure = 'g'): self
-    {
-        $newQuantity = new self($value, $measure);
-
-        $result = $this->toGrams() + $newQuantity->toGrams();
-
-        return new self($result, $measure);
-    }
 }

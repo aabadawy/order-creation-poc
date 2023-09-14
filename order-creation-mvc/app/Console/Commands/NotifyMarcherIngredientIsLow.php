@@ -3,10 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Commands\Ingredient\SendIngredientQuantityBelowEmailCommand;
-use App\Mail\IngredientQuantityBelow;
 use App\Models\Ingredient;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
 
 class NotifyMarcherIngredientIsLow extends Command
 {
@@ -32,11 +30,10 @@ class NotifyMarcherIngredientIsLow extends Command
         Ingredient::query()
             ->whereShouldSendQuantityBelowEmail()
             ->lazyById(100)
-            ->each(function (Ingredient $ingredient) use($sendIngredientQuantityBelowEmailCommand){
+            ->each(function (Ingredient $ingredient) use ($sendIngredientQuantityBelowEmailCommand) {
                 try {
                     $sendIngredientQuantityBelowEmailCommand->execute($ingredient);
-                }
-                catch(\Exception $exception) {
+                } catch (\Exception $exception) {
                     //continue
                 }
             });

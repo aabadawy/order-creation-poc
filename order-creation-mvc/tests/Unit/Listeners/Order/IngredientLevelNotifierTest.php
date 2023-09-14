@@ -1,6 +1,5 @@
 <?php
 
-use App\Commands\Ingredient\SendIngredientQuantityBelowEmailCommand;
 use App\Events\Order\OrderCreatedEvent;
 use App\Listeners\Order\IngredientLevelNotifier;
 use App\Mail\IngredientQuantityBelow;
@@ -66,9 +65,8 @@ describe('IngredientLevelNotifier', function () {
             ->create([
                 'init_quantity' => new QuantityValueObject(1000),
                 'current_quantity' => new QuantityValueObject(480),
-                'quantity_below_email_sent_at' => null
+                'quantity_below_email_sent_at' => null,
             ]);
-
 
         expect(Ingredient::query()->first()->quantity_below_email_sent_at)->toBeNull();
 

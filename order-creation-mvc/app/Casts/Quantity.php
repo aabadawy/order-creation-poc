@@ -29,10 +29,6 @@ class Quantity implements CastsAttributes
             throw new \InvalidArgumentException('The given value is not an QuantityValueObject instance.');
         }
 
-        if ($value->toGrams() < 0) {
-            throw new \RuntimeException("ingredient with id:{$model->getKey()} quantity out of stock.");
-        }
-
         return $value->toGrams();
     }
 }

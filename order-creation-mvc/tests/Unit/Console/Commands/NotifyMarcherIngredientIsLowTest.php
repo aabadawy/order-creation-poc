@@ -1,6 +1,5 @@
 <?php
 
-use App\Console\Commands\NotifyMarcherIngredientIsLow;
 use App\Mail\IngredientQuantityBelow;
 use App\Models\Ingredient;
 use App\ValueObjects\QuantityValueObject;
@@ -14,8 +13,8 @@ it('should call send ingredient below mail', function () {
     Mail::fake();
 
     $ingredient = Ingredient::factory()->createOne([
-        'init_quantity' => new QuantityValueObject(10,'kg'),
-        'current_quantity' => new QuantityValueObject(4,'kg'),
+        'init_quantity' => new QuantityValueObject(10, 'kg'),
+        'current_quantity' => new QuantityValueObject(4, 'kg'),
     ]);
 
     $this->artisan('app:notify-marcher-ingredient-is-low');

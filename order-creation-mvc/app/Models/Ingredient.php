@@ -39,9 +39,11 @@ class Ingredient extends Model
             ->withTimestamps();
     }
 
-    public function subtractQuantity(float $quantity, string $measure = 'g'): void
+    public function subtractQuantity(float $quantity, string $measure = 'g'): bool
     {
         $this->current_quantity = $this->current_quantity->subtract($quantity, $measure);
+
+        return $this->save();
     }
 
     public function newEloquentBuilder($query): IngredientQueryBuilder

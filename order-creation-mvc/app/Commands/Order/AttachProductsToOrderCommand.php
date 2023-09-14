@@ -31,8 +31,10 @@ class AttachProductsToOrderCommand
             ->each(function (ProductIngredient $productIngredient) use ($orderProducts, &$orderProductIngredient) {
                 $ingredientSubtractedQuantity = $orderProducts[$productIngredient->product_id]['quantity'] * $productIngredient->quantity->toGrams();
 
-                // get ingredient instance lazy, to ensure the quantity is 'up-to-date' and no conflict happens
-                $this->subtractIngredientQuantity($productIngredient->ingredient, $ingredientSubtractedQuantity);
+                // get ingredient instance lazy, to ensure the 'quantity' is 'up-to-date'.
+                $ingredient = $productIngredient->ingredient;
+
+                $ingredient->subtractQuantity($ingredientSubtractedQuantity);
 
                 $orderProductIngredient[$productIngredient->ingredient->getKey()] = [
                     'product_id' => $productIngredient->product_id,
@@ -41,13 +43,6 @@ class AttachProductsToOrderCommand
             });
 
         $order->ingredients()->attach($orderProductIngredient);
-    }
-
-    protected function subtractIngredientQuantity(Ingredient $ingredient, float $usedQuantityInGrams): bool
-    {
-        $ingredient->subtractQuantity($usedQuantityInGrams);
-
-        return $ingredient->save();
     }
 
     private function validateOrderProductsDataInstance(DataCollection $orderProductsData): void

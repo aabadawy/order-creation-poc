@@ -29,9 +29,9 @@ class QuantityValueObject
 
     public function subtract(float $value, string $measure = 'g'): self
     {
-        $newQuantity = new self($value, $measure);
+        $subtractedQuantity = new self($value, $measure);
 
-        $result = $this->toGrams() - $newQuantity->toGrams();
+        $result = $this->toGrams() - $subtractedQuantity->toGrams();
 
         return new self($result, $measure);
     }

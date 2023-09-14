@@ -23,21 +23,6 @@ describe('IngredientModelTest', function () {
         expect($ingredient->current_quantity->toGrams())->toEqual(1000);
     });
 
-    it('should subtract quantity without saving in db', function () {
-
-        $ingredient = Ingredient::factory()->createOne([
-            'name' => 'Onion',
-            'init_quantity' => new QuantityValueObject(2, 'kg'),
-            'current_quantity' => new QuantityValueObject(1, 'kg'),
-        ]);
-
-        $ingredient->subtractQuantity(100);
-
-        expect($ingredient->current_quantity->toGrams())->toEqual(900);
-
-        expect($ingredient->refresh()->current_quantity->toGrams())->toEqual(1000);
-    });
-
     it('should subtract quantity', function () {
         $ingredient = Ingredient::factory()->createOne([
             'name' => 'Onion',

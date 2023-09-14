@@ -19,10 +19,7 @@ describe('SendIngredientQuantityBelowEmailCommand', function () {
         $sendIngredientQuantityBelowEmailCommand = app(SendIngredientQuantityBelowEmailCommand::class);
 
         $sendIngredientQuantityBelowEmailCommand->execute(
-            Ingredient::factory()->createOne([
-                'init_quantity' => new QuantityValueObject(10, 'kg'),
-                'current_quantity' => new QuantityValueObject(4, 'kg'),
-            ])
+            Ingredient::factory()->quantityBelow()->createOne()
         );
 
         Mail::assertSent(IngredientQuantityBelow::class);
@@ -32,10 +29,7 @@ describe('SendIngredientQuantityBelowEmailCommand', function () {
         $sendIngredientQuantityBelowEmailCommand = app(SendIngredientQuantityBelowEmailCommand::class);
 
         $sendIngredientQuantityBelowEmailCommand->execute(
-            Ingredient::factory()->createOne([
-                'init_quantity' => new QuantityValueObject(10, 'kg'),
-                'current_quantity' => new QuantityValueObject(4, 'kg'),
-            ])
+            Ingredient::factory()->quantityBelow()->createOne()
         );
 
         expect(Ingredient::query()->first()->quantity_below_email_sent_at)->not->toBeNull();

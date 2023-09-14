@@ -17,6 +17,11 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
             $table->foreignId('product_id')->nullable()->constrained('products')->nullOnDelete();
 
+            $table->unique([
+                'order_id',
+                'product_id'
+            ]);
+
             $table->float('quantity')->comment('the product quantity for this product');
 
             $table->timestamps();

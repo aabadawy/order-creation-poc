@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Ingredient;
 use App\Models\Product;
+use App\ValueObjects\QuantityValueObject;
 use Illuminate\Database\Seeder;
 
 class InitProductSeeder extends Seeder
@@ -30,9 +31,9 @@ class InitProductSeeder extends Seeder
 
         $product_ingredients = $ingredients->map(function (Ingredient $ingredient) {
             $product_ingredient_quantity = match (strtolower($ingredient->name)) {
-                'beef' => 150,
-                'cheese' => 30,
-                'onion' => 20,
+                'beef' => new QuantityValueObject(150),
+                'cheese' => new QuantityValueObject(30),
+                'onion' => new QuantityValueObject(20),
             };
 
             return [

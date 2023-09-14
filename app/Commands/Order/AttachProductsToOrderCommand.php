@@ -5,6 +5,7 @@ namespace App\Commands\Order;
 use App\DTOs\Order\OrderProductData;
 use App\Models\Ingredient;
 use App\Models\Order;
+use App\Models\OrderProductIngredient;
 use App\Models\ProductIngredient;
 use App\ValueObjects\QuantityValueObject;
 use Spatie\LaravelData\DataCollection;
@@ -28,10 +29,10 @@ class AttachProductsToOrderCommand
         ProductIngredient::query()
             ->whereIn('product_id', $orderProducts->pluck('product_id'))
             ->lazyById(100, 'id')
-            ->each(function (ProductIngredient $productIngredient) use ($orderProducts, &$orderProductIngredient) {
+            ->each(function (ProductIngredient $productIngredient) use ($order,$orderProducts, &$orderProductIngredient) {
                 $ingredientSubtractedQuantity = $orderProducts[$productIngredient->product_id]['quantity'] * $productIngredient->quantity->toGrams();
 
-                // get ingredient instance lazy, to ensure the 'quantity' is 'up-to-date'.
+                //lazy load ingredient instance, to ensure the 'quantity' is 'up-to-date'.
                 $ingredient = $productIngredient->ingredient;
 
                 $ingredient->subtractQuantity($ingredientSubtractedQuantity);
@@ -40,9 +41,15 @@ class AttachProductsToOrderCommand
                     'product_id' => $productIngredient->product_id,
                     'quantity' => new QuantityValueObject($ingredientSubtractedQuantity),
                 ];
-            });
 
-        $order->ingredients()->attach($orderProductIngredient);
+                OrderProductIngredient::query()->updateOrCreate([
+                    'product_id'    => $productIngredient->product_id,
+                    'ingredient_id' => $ingredient->getKey(),
+                    'order_id'      => $order->getKey(),
+                ],[
+                    'quantity'      => new QuantityValueObject($ingredientSubtractedQuantity),
+                ]);
+            });
     }
 
     private function validateOrderProductsDataInstance(DataCollection $orderProductsData): void

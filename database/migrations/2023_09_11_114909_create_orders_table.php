@@ -19,16 +19,6 @@ return new class extends Migration
                 ->constrained('users')
                 ->nullOnDelete();
 
-            $table->enum('status',
-                [
-                    'pending',
-                    'preparing',
-                    'delivering',
-                    'delivered',
-                    'canceled',
-                ])
-                ->default('pending');
-
             $table->timestamps();
         });
     }

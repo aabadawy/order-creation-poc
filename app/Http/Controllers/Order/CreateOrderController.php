@@ -20,7 +20,7 @@ class CreateOrderController extends Controller
         try {
             DB::beginTransaction();
 
-            $createdOrder = $createOrderCommand->execute(CreateOrderDataFactory::fromCreateOrderRequest($request));
+            $createdOrder = $createOrderCommand->execute((new CreateOrderDataFactory())->from($request));
 
             DB::commit();
         } catch (\Exception $exception) {

@@ -90,5 +90,5 @@ In General, I prefer to use Domain Driven Design and specially with the recommen
 - order_product_ingredients
   Attributes: id, order_id (FK), product_id (FK), ingredient_id (FK)
 
-<img src="order creation erd.png" alt="J" width="1000" height="300"/>
+<img src="database erd.png" alt="J"/>
 

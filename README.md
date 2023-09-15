@@ -38,7 +38,7 @@
 -  attach **products ingredients** to **Created Order** with fetching the product ingredients in **lazy Collection** with **100 ber chunk**, so avoid **memory issue** when interacting with **large data**.
 -  load each single ingredient one by one, to ensure the current quantity is the latest exists quantity in the DB, to increase the **reality**
 #### 2. Notify Marcher
-- Register Worker which works every **5 minutes** to fetch all ingredients quantities below the **50%**, then start to-
+- Register cron job which works every **5 minutes** to fetch all ingredients quantities below the **50%**, then start to-
   - send mail to marcher
   - update ingredient `quantity_below_email_sent_at` to mark the ingredient email as sent -as simple as that-.
 - Fetching the ingredients also in **lazy Collection** also to avoid **memory issue**.
@@ -46,7 +46,7 @@
 
 ## Project Structure.
 In General, I prefer to use Domain Driven Design and specially with the recommended structure by **Spatie** [Laravel Beyond CRUD](https://spatie.be/products/laravel-beyond-crud).<br/>
-**Here** I'm using **Laravel MVC** but **take in consideration** the importance of **using:** 
+**Here** I'm using **Laravel MVC** but **take in consideration** the importance of **using the next:** 
 - Command (action) Design Pattern, to increase Readability and ensure single business logic for single command
 - DTO,for encapsulating and centralizing data handling, enhancing data validation, security, and flexibility. 
 - Value Object, to ensure the **quantity (mass)** always valid after creating the value object.

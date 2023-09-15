@@ -1,21 +1,26 @@
 ## Order Create Task
 
 ### Getting started
-- requirements
-  - PHP 8.1
-  - Mysql 8
-- run the next commands
-  - ``cp .env.example .env`` 
-  - ``composer install``
-  - set your db configuration in the .env
-  - ``php artisan migrate --seed``
-  - ``php artisan serve``
-  - open [API doc](https://documenter.getpostman.com/view/26549647/2s9YC5xsMm)
+- ## using Laravel sail
+  - run ``php artisan sail:install``
+  - run the project using: ``./vendor/bin/sail up``
+
+- ## using local machine environment
+  - requirements
+      - PHP 8.1
+      - Mysql 8
+    - run the next commands
+      - ``cp .env.example .env`` 
+      - ``composer install``
+      - set your db configuration in the .env
+      - ``php artisan migrate --seed``
+      - ``php artisan serve``
+      - open [API doc](https://documenter.getpostman.com/view/26549647/2s9YC5xsMm)
 ---
 
 ### todos 
-- [ ] install laravel sail, and configure docker compose file
-- [ ] document project running using laravel sail
+- [x] install laravel sail, and configure docker compose file
+- [x] document project running using laravel sail
 - [x] add postman collection link
 ---
 ### Issue

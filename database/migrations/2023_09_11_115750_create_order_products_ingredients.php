@@ -23,8 +23,8 @@ return new class extends Migration
             $table->unique([
                 'order_id',
                 'product_id',
-                'ingredient_id'
-            ],'order_product_ingredient_unique_index');
+                'ingredient_id',
+            ], 'order_product_ingredient_unique_index');
 
             $table->float('quantity')->comment('the ingredient quantity ber grams');
 

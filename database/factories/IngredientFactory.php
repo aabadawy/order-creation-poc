@@ -26,14 +26,14 @@ class IngredientFactory extends Factory
         ];
     }
 
-    public function quantityBelow():Factory
+    public function quantityBelow(): Factory
     {
         return $this->state(function (array $attributes) {
-            $init_quantity = new QuantityValueObject($this->faker->randomFloat(2,10,20),'kg');
+            $init_quantity = new QuantityValueObject($this->faker->randomFloat(2, 10, 20), 'kg');
 
             return [
                 'init_quantity' => $init_quantity,
-                'current_quantity' => new QuantityValueObject(($init_quantity->toGrams() /2) - 100,'g'),
+                'current_quantity' => new QuantityValueObject(($init_quantity->toGrams() / 2) - 100, 'g'),
             ];
         });
     }

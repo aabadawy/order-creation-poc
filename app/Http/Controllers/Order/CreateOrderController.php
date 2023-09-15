@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\DataFactory\Order\CreateOrderDataFactory;
 use App\Http\Requests\Order\CreateOrderRequest;
 use App\Http\Resources\Order\OrderResource;
-use http\Client\Curl\User;
 use Illuminate\Support\Facades\DB;
 
 class CreateOrderController extends Controller

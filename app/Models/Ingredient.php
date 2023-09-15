@@ -39,13 +39,12 @@ class Ingredient extends Model
             ->withTimestamps();
     }
 
-    public function canSubtractQuantity(float $quantity,string $measure): bool
+    public function canSubtractQuantity(float $quantity, string $measure): bool
     {
         try {
             //when quantity less than 0 this will throw error from the value object
-            $this->current_quantity->subtract($quantity,$measure);
-        }
-        catch (\Exception $exception) {
+            $this->current_quantity->subtract($quantity, $measure);
+        } catch (\Exception $exception) {
             return false;
         }
 

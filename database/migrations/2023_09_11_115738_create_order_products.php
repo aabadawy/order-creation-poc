@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->unique([
                 'order_id',
-                'product_id'
+                'product_id',
             ]);
 
             $table->float('quantity')->comment('the product quantity for this product');

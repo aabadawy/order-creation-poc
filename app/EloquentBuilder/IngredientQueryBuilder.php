@@ -35,10 +35,10 @@ class IngredientQueryBuilder extends Builder
 
     public function whereAnyQuantityNotAvailableForProduct(int $product_id, int $product_quantity): self
     {
-        return $this->rightJoin('product_ingredient','ingredients.id','product_ingredient.ingredient_id')
+        return $this->rightJoin('product_ingredient', 'ingredients.id', 'product_ingredient.ingredient_id')
             ->select(DB::raw("(ingredients.current_quantity - product_ingredient.quantity * $product_quantity) > 0 as ingredient_quantity_available_in_stock"))
-            ->where(DB::raw('product_ingredient.product_id'),$product_id)
-            ->having('ingredient_quantity_available_in_stock',0)
+            ->where(DB::raw('product_ingredient.product_id'), $product_id)
+            ->having('ingredient_quantity_available_in_stock', 0)
             ->groupBy('ingredient_quantity_available_in_stock');
     }
 }

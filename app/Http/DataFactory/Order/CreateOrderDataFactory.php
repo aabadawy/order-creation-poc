@@ -4,11 +4,10 @@ namespace App\Http\DataFactory\Order;
 
 use App\DTOs\Order\OrderData;
 use App\Http\Requests\Order\CreateOrderRequest;
-use Illuminate\Foundation\Http\FormRequest;
 
 class CreateOrderDataFactory
 {
-    public function from($request):OrderData
+    public function from($request): OrderData
     {
         if ($request instanceof CreateOrderRequest) {
             return $this->fromCreateOrderRequest($request);

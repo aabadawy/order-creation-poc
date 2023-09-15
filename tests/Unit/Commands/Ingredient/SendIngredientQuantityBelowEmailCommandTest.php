@@ -3,7 +3,6 @@
 use App\Commands\Ingredient\SendIngredientQuantityBelowEmailCommand;
 use App\Mail\IngredientQuantityBelow;
 use App\Models\Ingredient;
-use App\ValueObjects\QuantityValueObject;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;

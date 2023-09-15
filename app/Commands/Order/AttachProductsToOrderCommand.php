@@ -29,7 +29,7 @@ class AttachProductsToOrderCommand
         ProductIngredient::query()
             ->whereIn('product_id', $orderProducts->pluck('product_id'))
             ->lazyById(100, 'id')
-            ->each(function (ProductIngredient $productIngredient) use ($order,$orderProducts, &$orderProductIngredient) {
+            ->each(function (ProductIngredient $productIngredient) use ($order, $orderProducts, &$orderProductIngredient) {
                 $ingredientSubtractedQuantity = $orderProducts[$productIngredient->product_id]['quantity'] * $productIngredient->quantity->toGrams();
 
                 //lazy load ingredient instance, to ensure the 'quantity' is 'up-to-date'.
@@ -43,11 +43,11 @@ class AttachProductsToOrderCommand
                 ];
 
                 OrderProductIngredient::query()->updateOrCreate([
-                    'product_id'    => $productIngredient->product_id,
+                    'product_id' => $productIngredient->product_id,
                     'ingredient_id' => $ingredient->getKey(),
-                    'order_id'      => $order->getKey(),
-                ],[
-                    'quantity'      => new QuantityValueObject($ingredientSubtractedQuantity),
+                    'order_id' => $order->getKey(),
+                ], [
+                    'quantity' => new QuantityValueObject($ingredientSubtractedQuantity),
                 ]);
             });
     }

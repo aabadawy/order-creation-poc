@@ -10,11 +10,13 @@
   - set your db configuration in the .env
   - ``php artisan migrate --seed``
   - ``php artisan serve``
+  - open [API doc](https://documenter.getpostman.com/view/26549647/2s9YC5xsMm)
 ---
+
 ### todos 
 - [ ] install laravel sail, and configure docker compose file
 - [ ] document project running using laravel sail
-- [ ] add postman collection link
+- [x] add postman collection link
 ---
 ### Issue
 #### 1.  Order Creation

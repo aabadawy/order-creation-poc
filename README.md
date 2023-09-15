@@ -3,6 +3,7 @@
 ### Getting started
 - ## using Laravel sail
   - run ``php artisan sail:install``
+  - ``./vendor/bing/sail migrate --seed``
   - run the project using: ``./vendor/bin/sail up``
 
 - ## using local machine environment

@@ -2,6 +2,8 @@
 
 ### Getting started
 - ## using Laravel sail
+  - run ``cp .env.example .env``
+  - run ``composer install``
   - run ``php artisan sail:install``
   - ``./vendor/bing/sail migrate --seed``
   - run the project using: ``./vendor/bin/sail up``
